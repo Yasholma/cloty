@@ -1,35 +1,30 @@
 import ShopActionTypes from "./shop.types";
-import {
-	convertCollectionsSnapshotToMap,
-	firestore
-} from "./../../firebase/firebase.utils";
 
-const isFetchingCollectionsStart = () => ({
+export const fetchCollectionsStart = () => ({
 	type: ShopActionTypes.FETCHING_COLLECTIONS_START
 });
 
-const isFetchingCollectionsSuccess = collectionsMap => ({
+export const fetchCollectionsSuccess = collectionsMap => ({
 	type: ShopActionTypes.FETCHING_COLLECTIONS_SUCCESS,
 	payload: collectionsMap
 });
 
-const isFetchingCollectionsFailed = errorMessage => ({
+export const fetchCollectionsFailed = errorMessage => ({
 	type: ShopActionTypes.FETCHING_COLLECTIONS_FAILED,
 	payload: errorMessage.message
 });
 
-export const isFetchingCollectionsAsync = () => dispatch => {
-	const collectionRef = firestore.collection("collections");
+// REDUX THUNK
+// export const isFetchingCollectionsAsync = () => dispatch => {
+// 	const collectionRef = firestore.collection("collections");
 
-	dispatch(isFetchingCollectionsStart());
+// 	dispatch(fetchCollectionsStart());
 
-	collectionRef
-		.get()
-		.then(snapshot => {
-			const doc = convertCollectionsSnapshotToMap(snapshot);
-			dispatch(isFetchingCollectionsSuccess(doc));
-		})
-		.catch(errorMessage =>
-			dispatch(isFetchingCollectionsFailed(errorMessage))
-		);
-};
+// 	collectionRef
+// 		.get()
+// 		.then(snapshot => {
+// 			const doc = convertCollectionsSnapshotToMap(snapshot);
+// 			dispatch(fetchCollectionsSuccess(doc));
+// 		})
+// 		.catch(errorMessage => dispatch(fetchCollectionsFailed(errorMessage)));
+// };
